@@ -1,0 +1,11 @@
+{
+  "name": "maven-cloudartifact-action",
+  "version": "1.0.0",
+  "description": "Action for uploading or downloading artifact from HuaweiCloud CloudArtifact",
+  "main": "lib/main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}
