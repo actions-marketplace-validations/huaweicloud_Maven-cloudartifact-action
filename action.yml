@@ -1,0 +1,23 @@
+# action.yml
+name: 'HuaweiCloud Maven CloudArtifact'
+description: 'Action for deploying/downloading maven packages to HuaweiCloud Maven CloudArtifact'
+inputs:
+  servers:
+    description: 'json array of servers to add to settings.xml, eg: [{"id": "serverId", "username": "username", "password": "password"}]'
+    required: false
+  mirrors:
+    description: 'json array of mirrors to add to settings.xml, eg: [{"id": "id", "mirrorOf": "mirrorOf", "url": "url"}]'
+    required: false
+  repositories:
+    description: 'json array of repositories to add to settings.xml, eg: [{"id": "id", "url": "url", "releases": {"enabled": true}, "snapshots": {"enabled": false}}]'
+    required: false
+  plugin_repositories:
+    description: 'json array of plugin repositories to add to settings.xml, eg: [{"id": "id", "url": "url", "releases": {"enabled": true}, "snapshots": {"enabled": false}}]'
+    required: false
+branding:
+  icon: 'cloud'
+  color: 'red'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
+
