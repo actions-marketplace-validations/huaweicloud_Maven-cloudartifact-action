@@ -7,9 +7,9 @@
     "build": "tsc",
     "run": "node ./lib/main.js",
     "lint-create": "eslint --init",
-    "lint": "eslint src test --ext ts",
-    "format": "prettier --write '**/*.ts'",
-    "format-check": "prettier --check '**/*.ts'",
+    "lint": "eslint src --ext ts",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
     "test": "jest"
   },
   "author": "",
