@@ -7,7 +7,7 @@ import * as context from './context';
  */
 export function checkInputs(inputs: context.Inputs): boolean {
   for (const key in inputs) {
-    if (!isJsonString((inputs as any)[key])) {
+    if (!isJsonArrayString((inputs as any)[key])) {
       return false;
     }
   }
@@ -15,14 +15,14 @@ export function checkInputs(inputs: context.Inputs): boolean {
 }
 
 /**
- * 查看字符是否可以转化为json对象
+ * 查看字符是否可以转化为json array对象
  * @param str
  * @returns
  */
-export function isJsonString(str: string): boolean {
+export function isJsonArrayString(str: string): boolean {
   try {
-    const obj = JSON.parse(str);
-    if (typeof obj == 'object' && obj) {
+    const jsonArray = JSON.parse(str);
+    if (typeof jsonArray == 'object' && Array.isArray(jsonArray) && jsonArray) {
       return true;
     } else {
       return false;
