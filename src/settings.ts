@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {DOMParser, XMLSerializer} from '@xmldom/xmldom';
 import formatter from 'xml-formatter';
+import * as core from '@actions/core';
 
 import * as context from './context';
 
@@ -35,6 +36,10 @@ export function generateServersXml(settingsXml: Document, servers: string) {
       username: string | null;
       password: string | null;
     }) => {
+      if (!server.id || !server.username || !server.password) {
+        core.setFailed('servers must contain id, and username and password');
+        return;
+      }
       const serverXml = getTemplate(TEMPLATES_PATH, 'servers.xml');
       serverXml.getElementsByTagName('id')[0].textContent = server.id;
       serverXml.getElementsByTagName('username')[0].textContent =
