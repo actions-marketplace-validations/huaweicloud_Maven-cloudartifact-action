@@ -6,8 +6,13 @@ import * as context from './context';
  * @returns
  */
 export function checkInputs(inputs: context.Inputs): boolean {
+   
   for (const key in inputs) {
-    if (!isJsonArrayString((inputs as any)[key])) {
+    const value = (inputs as any)[key];
+    if (checkParameterIsNull(value)) {
+      continue;
+    }
+    if (!isJsonArrayString(value)) {
       return false;
     }
   }
@@ -30,4 +35,18 @@ export function isJsonArrayString(str: string): boolean {
   } catch (e) {
     return false;
   }
+}
+
+/**
+ * 判断字符串是否为空
+ * @param parameter
+ * @returns
+ */
+ export function checkParameterIsNull(parameter: string): boolean {
+  return (
+    parameter === undefined ||
+    parameter === null ||
+    parameter === '' ||
+    parameter.trim().length == 0
+  )
 }
