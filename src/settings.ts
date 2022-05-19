@@ -101,7 +101,7 @@ export function generateProfilesXml(settingsXml: Document, repositories: string,
 
 function generateDefaultProfilesXml(settingsXml: Document) {
   
-  let profilesXml = settingsXml.getElementsByTagName('profiles')[0];
+  const profilesXml = settingsXml.getElementsByTagName('profiles')[0];
 
   const dependencyRepositoriesXml = profilesXml.getElementsByTagName('repositories')[0];
   const defaultRepositoriesXml = getTemplate(TEMPLATES_PATH, 'default-repositories.xml');
