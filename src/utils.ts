@@ -8,12 +8,14 @@ import * as context from './context';
 export function checkInputs(inputs: context.Inputs): boolean {
    
   for (const key in inputs) {
-    const value = (inputs as any)[key];
-    if (checkParameterIsNull(value)) {
-      continue;
-    }
-    if (!isJsonArrayString(value)) {
-      return false;
+    if(Object.prototype.hasOwnProperty.call(inputs, key)) {
+      const value = (inputs as any)[key];
+      if (checkParameterIsNull(value)) {
+        continue;
+      }
+      if (!isJsonArrayString(value)) {
+        return false;
+      }
     }
   }
   return true;
