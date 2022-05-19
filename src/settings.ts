@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as os from 'os';
 import {DOMParser, XMLSerializer} from '@xmldom/xmldom';
 import formatter from 'xml-formatter';
 import * as core from '@actions/core';
@@ -25,6 +26,7 @@ export function generateSettingXml(inputs: context.Inputs) {
 
   const settingStr = new XMLSerializer().serializeToString(settingsXml);
   console.log(formatter(settingStr));
+  console.log(getMavenSettingPath());
 }
 
 export function generateServersXml(settingsXml: Document, servers: string) {
@@ -148,4 +150,9 @@ function generateDependencyOrPluginRepositoriesXml(profilesXml: Element, depende
       dependencyOrPluginRepositoriesXml.appendChild(dependencyOrPluginRepositoryXml);
     }
   );
+}
+
+
+function getMavenSettingPath() {
+  return path.join(os.homedir(), '.m2', 'settings.xml');
 }
