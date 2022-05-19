@@ -25,8 +25,9 @@ export function generateSettingXml(inputs: context.Inputs) {
   generateProfilesXml(settingsXml, inputs.repositories, inputs.pluginRepositories);
 
   const settingStr = new XMLSerializer().serializeToString(settingsXml);
-  console.log(formatter(settingStr));
-  console.log(getMavenSettingPath());
+  // console.log(formatter(settingStr));
+  // console.log(getMavenSettingPath());
+  writeMavenSetting(getMavenSettingPath(), settingStr);
 }
 
 export function generateServersXml(settingsXml: Document, servers: string) {
@@ -154,4 +155,13 @@ function generateDependencyOrPluginRepositoriesXml(profilesXml: Element, depende
 
 function getMavenSettingPath() {
   return path.join(os.homedir(), '.m2', 'settings.xml');
+}
+
+function writeMavenSetting(mavenSettingPath: string, mavenSettingContent: string) {
+  // 不存在.m2目录即创建
+  if (!fs.existsSync(path.dirname(mavenSettingPath))) {
+    core.info('Maven Setting Path does not exist.');
+    fs.mkdirSync(path.dirname(mavenSettingPath));
+  }
+  fs.writeFileSync(mavenSettingPath, formatter(mavenSettingContent))
 }
