@@ -152,7 +152,6 @@ function generateDependencyOrPluginRepositoriesXml(profilesXml: Element, depende
   );
 }
 
-
 function getMavenSettingPath() {
   return path.join(os.homedir(), '.m2', 'settings.xml');
 }
