@@ -25,8 +25,6 @@ export function generateSettingXml(inputs: context.Inputs) {
   generateProfilesXml(settingsXml, inputs.repositories, inputs.pluginRepositories);
 
   const settingStr = new XMLSerializer().serializeToString(settingsXml);
-  // console.log(formatter(settingStr));
-  // console.log(getMavenSettingPath());
   writeMavenSetting(getMavenSettingPath(), settingStr);
 }
 
