@@ -64,7 +64,7 @@ steps:
   with:
     plugin_repositories: '[{ "id": "some-plugin-repository", "url": "http://some.plugin.repository.url", "releases": { "enabled": "true" }, "snapshots": { "enabled": "false" }}]'
 ```
-plugin_repositories
+如果参数plugin_repositories为空或者不填，默认setting文件添加maven中心仓
 ```yaml
 plugin_repositories: |
   [
