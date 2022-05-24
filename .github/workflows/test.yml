@@ -8,8 +8,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          servers: '[{ "id": "release_cn-north-7_0746e5354900d4c60f81c00e1498ef20_maven_1_0", "username": "cn-north-7_0746e5354900d4c60f81c00e1498ef20_0746e535fc00d56f1f51c00efe905572", "password": "***" },{ "id": "snapshot_cn-north-7_0746e5354900d4c60f81c00e1498ef20_maven_2_0", "username": "cn-north-7_0746e5354900d4c60f81c00e1498ef20_0746e535fc00d56f1f51c00efe905572", "password": "***" }]'
-          mirrors: '[{ "id": "z_mirrors", "mirrorOf": "*,!release_cn-north-7_0746e5354900d4c60f81c00e1498ef20_maven_1_0,!snapshot_cn-north-7_0746e5354900d4c60f81c00e1498ef20_maven_2_0", "url": "http://mirrors.tools.huawei.com/maven/" }]'
+          servers: '[{ "id": "release_xxx_1_0", "username": "***", "password": "***" },{ "id": "snapshot_xxx_2_0", "username": "***", "password": "***" }]'
+          mirrors: '[{ "id": "z_mirrors", "mirrorOf": "*,!release_xxx_1_0,!snapshot_xxx_2_0", "url": "https://repo.huaweicloud.com/repository/maven/" }]'
       - run: |
           cd '项目目录'
           mvn deploy -Dmaven.test.skip=true -U -e -X -B 

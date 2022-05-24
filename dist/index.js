@@ -5443,7 +5443,7 @@ function getInputs() {
         servers: core.getInput('servers', { required: false }),
         mirrors: core.getInput('mirrors', { required: false }),
         repositories: core.getInput('repositories', { required: false }),
-        pluginRepositories: core.getInput('plugin_repositories', { required: false }),
+        pluginRepositories: core.getInput('plugin_repositories', { required: false })
     };
 }
 exports.getInputs = getInputs;
@@ -5601,8 +5601,7 @@ function generateMirrorsXml(settingsXml, mirrors) {
         mirrorXml.getElementsByTagName('id')[0].textContent = mirror.id;
         mirrorXml.getElementsByTagName('mirrorOf')[0].textContent =
             mirror.mirrorOf;
-        mirrorXml.getElementsByTagName('url')[0].textContent =
-            mirror.url;
+        mirrorXml.getElementsByTagName('url')[0].textContent = mirror.url;
         mirrorsXml.appendChild(mirrorXml);
     });
 }
@@ -5633,26 +5632,31 @@ function generateDependencyOrPluginRepositoriesXml(profilesXml, dependencyOrPlug
         return;
     }
     JSON.parse(dependencyOrPluginRepositories).forEach((dependencyOrPluginRepository) => {
-        if (!dependencyOrPluginRepository.id || !dependencyOrPluginRepository.url) {
+        if (!dependencyOrPluginRepository.id ||
+            !dependencyOrPluginRepository.url) {
             throw new Error(tagName + ' must contain id and url');
         }
         const dependencyOrPluginRepositoryXml = getTemplate(TEMPLATES_PATH, templateName);
         dependencyOrPluginRepositoryXml.getElementsByTagName('id')[0].textContent = dependencyOrPluginRepository.id;
         dependencyOrPluginRepositoryXml.getElementsByTagName('url')[0].textContent = dependencyOrPluginRepository.url;
         const releasesXml = dependencyOrPluginRepositoryXml.getElementsByTagName('releases')[0];
-        if (dependencyOrPluginRepository.releases !== null && dependencyOrPluginRepository.releases !== undefined) {
+        if (dependencyOrPluginRepository.releases !== null &&
+            dependencyOrPluginRepository.releases !== undefined) {
             const releases = dependencyOrPluginRepository.releases;
             if (Object.prototype.hasOwnProperty.call(releases, 'enabled')) {
-                releasesXml.getElementsByTagName('enabled')[0].textContent = releases['enabled'];
+                releasesXml.getElementsByTagName('enabled')[0].textContent =
+                    releases['enabled'];
             }
         }
         else {
             dependencyOrPluginRepositoryXml.documentElement.removeChild(releasesXml);
         }
         const snapshotsXml = dependencyOrPluginRepositoryXml.getElementsByTagName('snapshots')[0];
-        if (dependencyOrPluginRepository.snapshots !== null && dependencyOrPluginRepository.snapshots !== undefined) {
+        if (dependencyOrPluginRepository.snapshots !== null &&
+            dependencyOrPluginRepository.snapshots !== undefined) {
             const snapshots = dependencyOrPluginRepository.snapshots;
-            snapshotsXml.getElementsByTagName('enabled')[0].textContent = snapshots['enabled'];
+            snapshotsXml.getElementsByTagName('enabled')[0].textContent =
+                snapshots['enabled'];
         }
         else {
             dependencyOrPluginRepositoryXml.documentElement.removeChild(snapshotsXml);

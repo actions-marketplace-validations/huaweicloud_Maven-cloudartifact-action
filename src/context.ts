@@ -8,10 +8,10 @@ export interface Inputs {
 }
 
 export function getInputs(): Inputs {
-    return {
-      servers: core.getInput('servers', {required: false}),
-      mirrors: core.getInput('mirrors', {required: false}),
-      repositories: core.getInput('repositories', {required: false}),
-      pluginRepositories: core.getInput('plugin_repositories', {required: false}),
-    };
+  return {
+    servers: core.getInput('servers', {required: false}),
+    mirrors: core.getInput('mirrors', {required: false}),
+    repositories: core.getInput('repositories', {required: false}),
+    pluginRepositories: core.getInput('plugin_repositories', {required: false})
+  };
 }

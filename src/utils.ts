@@ -6,9 +6,8 @@ import * as context from './context';
  * @returns
  */
 export function checkInputs(inputs: context.Inputs): boolean {
-   
   for (const key in inputs) {
-    if(Object.prototype.hasOwnProperty.call(inputs, key)) {
+    if (Object.prototype.hasOwnProperty.call(inputs, key)) {
       const value = (inputs as any)[key];
       if (checkParameterIsNull(value)) {
         continue;
@@ -44,11 +43,11 @@ export function isJsonArrayString(str: string): boolean {
  * @param parameter
  * @returns
  */
- export function checkParameterIsNull(parameter: string): boolean {
+export function checkParameterIsNull(parameter: string): boolean {
   return (
     parameter === undefined ||
     parameter === null ||
     parameter === '' ||
     parameter.trim().length == 0
-  )
+  );
 }

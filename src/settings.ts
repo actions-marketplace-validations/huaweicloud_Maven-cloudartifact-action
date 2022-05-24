@@ -22,7 +22,11 @@ export function generateSettingXml(inputs: context.Inputs) {
 
   generateMirrorsXml(settingsXml, inputs.mirrors);
 
-  generateProfilesXml(settingsXml, inputs.repositories, inputs.pluginRepositories);
+  generateProfilesXml(
+    settingsXml,
+    inputs.repositories,
+    inputs.pluginRepositories
+  );
 
   const settingStr = new XMLSerializer().serializeToString(settingsXml);
   writeMavenSetting(getMavenSettingPath(), settingStr);
@@ -75,74 +79,130 @@ export function generateMirrorsXml(settingsXml: Document, mirrors: string) {
       mirrorXml.getElementsByTagName('id')[0].textContent = mirror.id;
       mirrorXml.getElementsByTagName('mirrorOf')[0].textContent =
         mirror.mirrorOf;
-      mirrorXml.getElementsByTagName('url')[0].textContent =
-        mirror.url;
+      mirrorXml.getElementsByTagName('url')[0].textContent = mirror.url;
       mirrorsXml.appendChild(mirrorXml);
     }
   );
 }
 
-
-export function generateProfilesXml(settingsXml: Document, repositories: string, pluginRepositories: string) {
+export function generateProfilesXml(
+  settingsXml: Document,
+  repositories: string,
+  pluginRepositories: string
+) {
   if (!repositories && !pluginRepositories) {
     generateDefaultProfilesXml(settingsXml);
     return;
   }
 
   const profilesXml = settingsXml.getElementsByTagName('profiles')[0];
-  generateDependencyOrPluginRepositoriesXml(profilesXml, repositories, 'repositories', 'repositories.xml');
+  generateDependencyOrPluginRepositoriesXml(
+    profilesXml,
+    repositories,
+    'repositories',
+    'repositories.xml'
+  );
 
-  generateDependencyOrPluginRepositoriesXml(profilesXml, pluginRepositories, 'pluginRepositories', 'plugin-repositories.xml');
+  generateDependencyOrPluginRepositoriesXml(
+    profilesXml,
+    pluginRepositories,
+    'pluginRepositories',
+    'plugin-repositories.xml'
+  );
 }
 
 function generateDefaultProfilesXml(settingsXml: Document) {
-  
   const profilesXml = settingsXml.getElementsByTagName('profiles')[0];
 
-  const dependencyRepositoriesXml = profilesXml.getElementsByTagName('repositories')[0];
-  const defaultRepositoriesXml = getTemplate(TEMPLATES_PATH, 'default-repositories.xml');
+  const dependencyRepositoriesXml =
+    profilesXml.getElementsByTagName('repositories')[0];
+  const defaultRepositoriesXml = getTemplate(
+    TEMPLATES_PATH,
+    'default-repositories.xml'
+  );
   dependencyRepositoriesXml.appendChild(defaultRepositoriesXml);
 
-  const pluginRepositoriesXml = profilesXml.getElementsByTagName('pluginRepositories')[0];
-  const defaultPluginRepositoriesXml = getTemplate(TEMPLATES_PATH, 'default-plugin-repositories.xml');
+  const pluginRepositoriesXml =
+    profilesXml.getElementsByTagName('pluginRepositories')[0];
+  const defaultPluginRepositoriesXml = getTemplate(
+    TEMPLATES_PATH,
+    'default-plugin-repositories.xml'
+  );
   pluginRepositoriesXml.appendChild(defaultPluginRepositoriesXml);
 }
 
-function generateDependencyOrPluginRepositoriesXml(profilesXml: Element, dependencyOrPluginRepositories: string, tagName: string, templateName: string) {
-  const dependencyOrPluginRepositoriesXml = profilesXml.getElementsByTagName(tagName)[0];
+function generateDependencyOrPluginRepositoriesXml(
+  profilesXml: Element,
+  dependencyOrPluginRepositories: string,
+  tagName: string,
+  templateName: string
+) {
+  const dependencyOrPluginRepositoriesXml =
+    profilesXml.getElementsByTagName(tagName)[0];
   if (!dependencyOrPluginRepositories) {
     profilesXml.removeChild(dependencyOrPluginRepositoriesXml);
     return;
   }
-  
-  JSON.parse(dependencyOrPluginRepositories).forEach(
-    (dependencyOrPluginRepository: { id: string | null; url: string | null; releases: null | undefined; snapshots: null | undefined; }) => {
-      if (!dependencyOrPluginRepository.id || !dependencyOrPluginRepository.url) {
-        throw new Error(tagName + ' must contain id and url')
-      }
-      const dependencyOrPluginRepositoryXml = getTemplate(TEMPLATES_PATH, templateName);
-      dependencyOrPluginRepositoryXml.getElementsByTagName('id')[0].textContent = dependencyOrPluginRepository.id;
-      dependencyOrPluginRepositoryXml.getElementsByTagName('url')[0].textContent = dependencyOrPluginRepository.url;
 
-      const releasesXml = dependencyOrPluginRepositoryXml.getElementsByTagName('releases')[0];
-      if (dependencyOrPluginRepository.releases !== null && dependencyOrPluginRepository.releases !== undefined) {
+  JSON.parse(dependencyOrPluginRepositories).forEach(
+    (dependencyOrPluginRepository: {
+      id: string | null;
+      url: string | null;
+      releases: null | undefined;
+      snapshots: null | undefined;
+    }) => {
+      if (
+        !dependencyOrPluginRepository.id ||
+        !dependencyOrPluginRepository.url
+      ) {
+        throw new Error(tagName + ' must contain id and url');
+      }
+      const dependencyOrPluginRepositoryXml = getTemplate(
+        TEMPLATES_PATH,
+        templateName
+      );
+      dependencyOrPluginRepositoryXml.getElementsByTagName(
+        'id'
+      )[0].textContent = dependencyOrPluginRepository.id;
+      dependencyOrPluginRepositoryXml.getElementsByTagName(
+        'url'
+      )[0].textContent = dependencyOrPluginRepository.url;
+
+      const releasesXml =
+        dependencyOrPluginRepositoryXml.getElementsByTagName('releases')[0];
+      if (
+        dependencyOrPluginRepository.releases !== null &&
+        dependencyOrPluginRepository.releases !== undefined
+      ) {
         const releases = dependencyOrPluginRepository.releases;
         if (Object.prototype.hasOwnProperty.call(releases, 'enabled')) {
-          releasesXml.getElementsByTagName('enabled')[0].textContent = releases['enabled'];
+          releasesXml.getElementsByTagName('enabled')[0].textContent =
+            releases['enabled'];
         }
       } else {
-        dependencyOrPluginRepositoryXml.documentElement.removeChild(releasesXml);
+        dependencyOrPluginRepositoryXml.documentElement.removeChild(
+          releasesXml
+        );
       }
 
-      const snapshotsXml = dependencyOrPluginRepositoryXml.getElementsByTagName('snapshots')[0];
-      if (dependencyOrPluginRepository.snapshots !== null && dependencyOrPluginRepository.snapshots !== undefined) {
+      const snapshotsXml =
+        dependencyOrPluginRepositoryXml.getElementsByTagName('snapshots')[0];
+      if (
+        dependencyOrPluginRepository.snapshots !== null &&
+        dependencyOrPluginRepository.snapshots !== undefined
+      ) {
         const snapshots = dependencyOrPluginRepository.snapshots;
-        snapshotsXml.getElementsByTagName('enabled')[0].textContent = snapshots['enabled'];
+        snapshotsXml.getElementsByTagName('enabled')[0].textContent =
+          snapshots['enabled'];
       } else {
-        dependencyOrPluginRepositoryXml.documentElement.removeChild(snapshotsXml);
+        dependencyOrPluginRepositoryXml.documentElement.removeChild(
+          snapshotsXml
+        );
       }
 
-      dependencyOrPluginRepositoriesXml.appendChild(dependencyOrPluginRepositoryXml);
+      dependencyOrPluginRepositoriesXml.appendChild(
+        dependencyOrPluginRepositoryXml
+      );
     }
   );
 }
@@ -151,11 +211,14 @@ function getMavenSettingPath() {
   return path.join(os.homedir(), '.m2', 'settings.xml');
 }
 
-function writeMavenSetting(mavenSettingPath: string, mavenSettingContent: string) {
+function writeMavenSetting(
+  mavenSettingPath: string,
+  mavenSettingContent: string
+) {
   // 不存在.m2目录即创建
   if (!fs.existsSync(path.dirname(mavenSettingPath))) {
     core.info('Maven Setting Path does not exist.');
     fs.mkdirSync(path.dirname(mavenSettingPath));
   }
-  fs.writeFileSync(mavenSettingPath, formatter(mavenSettingContent))
+  fs.writeFileSync(mavenSettingPath, formatter(mavenSettingContent));
 }
