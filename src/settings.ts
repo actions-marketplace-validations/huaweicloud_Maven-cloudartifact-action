@@ -9,7 +9,7 @@ import * as context from './context';
 
 const TEMPLATES_PATH = '../templates';
 
-function getTemplate(filePath: string, fileName: string) {
+export function getTemplate(filePath: string, fileName: string) {
   const templatePath = path.join(__dirname, filePath, fileName);
   const template = fs.readFileSync(templatePath).toString();
   return new DOMParser().parseFromString(template, 'text/xml');
@@ -42,8 +42,7 @@ export function generateServersXml(settingsXml: Document, servers: string) {
       password: string | null;
     }) => {
       if (!server.id || !server.username || !server.password) {
-        core.setFailed('servers must contain id, and username and password');
-        return;
+        throw new Error('servers must contain id, and username and password');
       }
       const serverXml = getTemplate(TEMPLATES_PATH, 'servers.xml');
       serverXml.getElementsByTagName('id')[0].textContent = server.id;
@@ -70,8 +69,7 @@ export function generateMirrorsXml(settingsXml: Document, mirrors: string) {
       url: string | null;
     }) => {
       if (!mirror.id || !mirror.mirrorOf || !mirror.url) {
-        core.setFailed('mirrors must contain id, and mirrorOf and url');
-        return;
+        throw new Error('mirrors must contain id, and mirrorOf and url');
       }
       const mirrorXml = getTemplate(TEMPLATES_PATH, 'mirrors.xml');
       mirrorXml.getElementsByTagName('id')[0].textContent = mirror.id;
@@ -120,9 +118,7 @@ function generateDependencyOrPluginRepositoriesXml(profilesXml: Element, depende
   JSON.parse(dependencyOrPluginRepositories).forEach(
     (dependencyOrPluginRepository: { id: string | null; url: string | null; releases: null | undefined; snapshots: null | undefined; }) => {
       if (!dependencyOrPluginRepository.id || !dependencyOrPluginRepository.url) {
-        core.setFailed(tagName + ' must contain id and url');
-        profilesXml.removeChild(dependencyOrPluginRepositoriesXml);
-        return;
+        throw new Error(tagName + ' must contain id and url')
       }
       const dependencyOrPluginRepositoryXml = getTemplate(TEMPLATES_PATH, templateName);
       dependencyOrPluginRepositoryXml.getElementsByTagName('id')[0].textContent = dependencyOrPluginRepository.id;

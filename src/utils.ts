@@ -29,7 +29,7 @@ export function checkInputs(inputs: context.Inputs): boolean {
 export function isJsonArrayString(str: string): boolean {
   try {
     const jsonArray = JSON.parse(str);
-    if (typeof jsonArray == 'object' && Array.isArray(jsonArray) && jsonArray) {
+    if (Array.isArray(jsonArray) && jsonArray.length > 0 && jsonArray) {
       return true;
     } else {
       return false;
