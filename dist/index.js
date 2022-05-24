@@ -5544,7 +5544,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.generateProfilesXml = exports.generateMirrorsXml = exports.generateServersXml = exports.generateSettingXml = void 0;
+exports.generateProfilesXml = exports.generateMirrorsXml = exports.generateServersXml = exports.generateSettingXml = exports.getTemplate = void 0;
 const fs = __importStar(__nccwpck_require__(147));
 const path = __importStar(__nccwpck_require__(17));
 const os = __importStar(__nccwpck_require__(37));
@@ -5557,14 +5557,13 @@ function getTemplate(filePath, fileName) {
     const template = fs.readFileSync(templatePath).toString();
     return new xmldom_1.DOMParser().parseFromString(template, 'text/xml');
 }
+exports.getTemplate = getTemplate;
 function generateSettingXml(inputs) {
     const settingsXml = getTemplate(TEMPLATES_PATH, 'settings.xml');
     generateServersXml(settingsXml, inputs.servers);
     generateMirrorsXml(settingsXml, inputs.mirrors);
     generateProfilesXml(settingsXml, inputs.repositories, inputs.pluginRepositories);
     const settingStr = new xmldom_1.XMLSerializer().serializeToString(settingsXml);
-    // console.log(formatter(settingStr));
-    // console.log(getMavenSettingPath());
     writeMavenSetting(getMavenSettingPath(), settingStr);
 }
 exports.generateSettingXml = generateSettingXml;
@@ -5576,8 +5575,7 @@ function generateServersXml(settingsXml, servers) {
     }
     JSON.parse(servers).forEach((server) => {
         if (!server.id || !server.username || !server.password) {
-            core.setFailed('servers must contain id, and username and password');
-            return;
+            throw new Error('servers must contain id, and username and password');
         }
         const serverXml = getTemplate(TEMPLATES_PATH, 'servers.xml');
         serverXml.getElementsByTagName('id')[0].textContent = server.id;
@@ -5597,8 +5595,7 @@ function generateMirrorsXml(settingsXml, mirrors) {
     }
     JSON.parse(mirrors).forEach((mirror) => {
         if (!mirror.id || !mirror.mirrorOf || !mirror.url) {
-            core.setFailed('mirrors must contain id, and mirrorOf and url');
-            return;
+            throw new Error('mirrors must contain id, and mirrorOf and url');
         }
         const mirrorXml = getTemplate(TEMPLATES_PATH, 'mirrors.xml');
         mirrorXml.getElementsByTagName('id')[0].textContent = mirror.id;
@@ -5621,7 +5618,7 @@ function generateProfilesXml(settingsXml, repositories, pluginRepositories) {
 }
 exports.generateProfilesXml = generateProfilesXml;
 function generateDefaultProfilesXml(settingsXml) {
-    let profilesXml = settingsXml.getElementsByTagName('profiles')[0];
+    const profilesXml = settingsXml.getElementsByTagName('profiles')[0];
     const dependencyRepositoriesXml = profilesXml.getElementsByTagName('repositories')[0];
     const defaultRepositoriesXml = getTemplate(TEMPLATES_PATH, 'default-repositories.xml');
     dependencyRepositoriesXml.appendChild(defaultRepositoriesXml);
@@ -5637,9 +5634,7 @@ function generateDependencyOrPluginRepositoriesXml(profilesXml, dependencyOrPlug
     }
     JSON.parse(dependencyOrPluginRepositories).forEach((dependencyOrPluginRepository) => {
         if (!dependencyOrPluginRepository.id || !dependencyOrPluginRepository.url) {
-            core.setFailed(tagName + ' must contain id and url');
-            profilesXml.removeChild(dependencyOrPluginRepositoriesXml);
-            return;
+            throw new Error(tagName + ' must contain id and url');
         }
         const dependencyOrPluginRepositoryXml = getTemplate(TEMPLATES_PATH, templateName);
         dependencyOrPluginRepositoryXml.getElementsByTagName('id')[0].textContent = dependencyOrPluginRepository.id;
@@ -5694,12 +5689,14 @@ exports.checkParameterIsNull = exports.isJsonArrayString = exports.checkInputs =
  */
 function checkInputs(inputs) {
     for (const key in inputs) {
-        const value = inputs[key];
-        if (checkParameterIsNull(value)) {
-            continue;
-        }
-        if (!isJsonArrayString(value)) {
-            return false;
+        if (Object.prototype.hasOwnProperty.call(inputs, key)) {
+            const value = inputs[key];
+            if (checkParameterIsNull(value)) {
+                continue;
+            }
+            if (!isJsonArrayString(value)) {
+                return false;
+            }
         }
     }
     return true;
@@ -5713,7 +5710,7 @@ exports.checkInputs = checkInputs;
 function isJsonArrayString(str) {
     try {
         const jsonArray = JSON.parse(str);
-        if (typeof jsonArray == 'object' && Array.isArray(jsonArray) && jsonArray) {
+        if (Array.isArray(jsonArray) && jsonArray.length > 0 && jsonArray) {
             return true;
         }
         else {

@@ -1,5 +1,4 @@
 import * as utils from '../src/utils';
-import * as context from '../src/context';
 
 describe('test whether the inputs is valid', () => {
     const testCase = [
