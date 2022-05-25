@@ -1,5 +1,341 @@
-/******/ (() => { // webpackBootstrap
+require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
+
+/***/ 842:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TEMPLATES_PATH = exports.getInputs = void 0;
+const core = __importStar(__nccwpck_require__(186));
+function getInputs() {
+    return {
+        servers: core.getInput('servers', { required: false }),
+        mirrors: core.getInput('mirrors', { required: false }),
+        repositories: core.getInput('repositories', { required: false }),
+        pluginRepositories: core.getInput('plugin_repositories', { required: false })
+    };
+}
+exports.getInputs = getInputs;
+exports.TEMPLATES_PATH = '../templates';
+
+
+/***/ }),
+
+/***/ 109:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.run = void 0;
+const core = __importStar(__nccwpck_require__(186));
+const context = __importStar(__nccwpck_require__(842));
+const utils = __importStar(__nccwpck_require__(918));
+const settings = __importStar(__nccwpck_require__(286));
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        core.info('Generate settings.xml for Maven Builds');
+        const inputs = context.getInputs();
+        // 检查参数是否合法
+        if (!utils.checkInputs(inputs)) {
+            core.setFailed('parameter is not correct.');
+            return;
+        }
+        settings.generateSettingXml(inputs);
+    });
+}
+exports.run = run;
+run().catch(core.setFailed);
+
+
+/***/ }),
+
+/***/ 286:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.generateProfilesXml = exports.generateMirrorsXml = exports.generateServersXml = exports.generateSettingXml = exports.getTemplate = void 0;
+const fs = __importStar(__nccwpck_require__(147));
+const path = __importStar(__nccwpck_require__(17));
+const os = __importStar(__nccwpck_require__(37));
+const xmldom_1 = __nccwpck_require__(213);
+const xml_formatter_1 = __importDefault(__nccwpck_require__(886));
+const core = __importStar(__nccwpck_require__(186));
+const context = __importStar(__nccwpck_require__(842));
+function getTemplate(filePath, fileName) {
+    const templatePath = path.join(__dirname, filePath, fileName);
+    const template = fs.readFileSync(templatePath).toString();
+    return new xmldom_1.DOMParser().parseFromString(template, 'text/xml');
+}
+exports.getTemplate = getTemplate;
+function generateSettingXml(inputs) {
+    const settingsXml = getTemplate(context.TEMPLATES_PATH, 'settings.xml');
+    generateServersXml(settingsXml, inputs.servers);
+    generateMirrorsXml(settingsXml, inputs.mirrors);
+    generateProfilesXml(settingsXml, inputs.repositories, inputs.pluginRepositories);
+    const settingStr = new xmldom_1.XMLSerializer().serializeToString(settingsXml);
+    writeMavenSetting(getMavenSettingPath(), settingStr);
+}
+exports.generateSettingXml = generateSettingXml;
+function generateServersXml(settingsXml, servers) {
+    const serversXml = settingsXml.getElementsByTagName('servers')[0];
+    if (!servers) {
+        settingsXml.documentElement.removeChild(serversXml);
+        return;
+    }
+    JSON.parse(servers).forEach((server) => {
+        if (!server.id || !server.username || !server.password) {
+            throw new Error('servers must contain id, and username and password');
+        }
+        const serverXml = getTemplate(context.TEMPLATES_PATH, 'servers.xml');
+        serverXml.getElementsByTagName('id')[0].textContent = server.id;
+        serverXml.getElementsByTagName('username')[0].textContent =
+            server.username;
+        serverXml.getElementsByTagName('password')[0].textContent =
+            server.password;
+        serversXml.appendChild(serverXml);
+    });
+}
+exports.generateServersXml = generateServersXml;
+function generateMirrorsXml(settingsXml, mirrors) {
+    const mirrorsXml = settingsXml.getElementsByTagName('mirrors')[0];
+    if (!mirrors) {
+        settingsXml.documentElement.removeChild(mirrorsXml);
+        return;
+    }
+    JSON.parse(mirrors).forEach((mirror) => {
+        if (!mirror.id || !mirror.mirrorOf || !mirror.url) {
+            throw new Error('mirrors must contain id, and mirrorOf and url');
+        }
+        const mirrorXml = getTemplate(context.TEMPLATES_PATH, 'mirrors.xml');
+        mirrorXml.getElementsByTagName('id')[0].textContent = mirror.id;
+        mirrorXml.getElementsByTagName('mirrorOf')[0].textContent =
+            mirror.mirrorOf;
+        mirrorXml.getElementsByTagName('url')[0].textContent = mirror.url;
+        mirrorsXml.appendChild(mirrorXml);
+    });
+}
+exports.generateMirrorsXml = generateMirrorsXml;
+function generateProfilesXml(settingsXml, repositories, pluginRepositories) {
+    if (!repositories && !pluginRepositories) {
+        generateDefaultProfilesXml(settingsXml);
+        return;
+    }
+    const profilesXml = settingsXml.getElementsByTagName('profiles')[0];
+    generateDependencyOrPluginRepositoriesXml(profilesXml, repositories, 'repositories', 'repositories.xml');
+    generateDependencyOrPluginRepositoriesXml(profilesXml, pluginRepositories, 'pluginRepositories', 'plugin-repositories.xml');
+}
+exports.generateProfilesXml = generateProfilesXml;
+function generateDefaultProfilesXml(settingsXml) {
+    const profilesXml = settingsXml.getElementsByTagName('profiles')[0];
+    const dependencyRepositoriesXml = profilesXml.getElementsByTagName('repositories')[0];
+    const defaultRepositoriesXml = getTemplate(context.TEMPLATES_PATH, 'default-repositories.xml');
+    dependencyRepositoriesXml.appendChild(defaultRepositoriesXml);
+    const pluginRepositoriesXml = profilesXml.getElementsByTagName('pluginRepositories')[0];
+    const defaultPluginRepositoriesXml = getTemplate(context.TEMPLATES_PATH, 'default-plugin-repositories.xml');
+    pluginRepositoriesXml.appendChild(defaultPluginRepositoriesXml);
+}
+function generateDependencyOrPluginRepositoriesXml(profilesXml, dependencyOrPluginRepositories, tagName, templateName) {
+    const dependencyOrPluginRepositoriesXml = profilesXml.getElementsByTagName(tagName)[0];
+    if (!dependencyOrPluginRepositories) {
+        profilesXml.removeChild(dependencyOrPluginRepositoriesXml);
+        return;
+    }
+    JSON.parse(dependencyOrPluginRepositories).forEach((dependencyOrPluginRepository) => {
+        if (!dependencyOrPluginRepository.id ||
+            !dependencyOrPluginRepository.url) {
+            throw new Error(tagName + ' must contain id and url');
+        }
+        const dependencyOrPluginRepositoryXml = getTemplate(context.TEMPLATES_PATH, templateName);
+        dependencyOrPluginRepositoryXml.getElementsByTagName('id')[0].textContent = dependencyOrPluginRepository.id;
+        dependencyOrPluginRepositoryXml.getElementsByTagName('url')[0].textContent = dependencyOrPluginRepository.url;
+        const releasesXml = dependencyOrPluginRepositoryXml.getElementsByTagName('releases')[0];
+        if (dependencyOrPluginRepository.releases !== null &&
+            dependencyOrPluginRepository.releases !== undefined) {
+            const releases = dependencyOrPluginRepository.releases;
+            if (Object.prototype.hasOwnProperty.call(releases, 'enabled')) {
+                releasesXml.getElementsByTagName('enabled')[0].textContent =
+                    releases['enabled'];
+            }
+        }
+        else {
+            dependencyOrPluginRepositoryXml.documentElement.removeChild(releasesXml);
+        }
+        const snapshotsXml = dependencyOrPluginRepositoryXml.getElementsByTagName('snapshots')[0];
+        if (dependencyOrPluginRepository.snapshots !== null &&
+            dependencyOrPluginRepository.snapshots !== undefined) {
+            const snapshots = dependencyOrPluginRepository.snapshots;
+            snapshotsXml.getElementsByTagName('enabled')[0].textContent =
+                snapshots['enabled'];
+        }
+        else {
+            dependencyOrPluginRepositoryXml.documentElement.removeChild(snapshotsXml);
+        }
+        dependencyOrPluginRepositoriesXml.appendChild(dependencyOrPluginRepositoryXml);
+    });
+}
+function getMavenSettingPath() {
+    return path.join(os.homedir(), '.m2', 'settings.xml');
+}
+function writeMavenSetting(mavenSettingPath, mavenSettingContent) {
+    // 不存在.m2目录即创建
+    if (!fs.existsSync(path.dirname(mavenSettingPath))) {
+        core.info('Maven Setting Path does not exist.');
+        fs.mkdirSync(path.dirname(mavenSettingPath));
+    }
+    fs.writeFileSync(mavenSettingPath, (0, xml_formatter_1.default)(mavenSettingContent));
+}
+
+
+/***/ }),
+
+/***/ 918:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkParameterIsNull = exports.isJsonArrayString = exports.checkInputs = void 0;
+/**
+ * 检查每个inputs 属性value是否合法
+ * @param inputs
+ * @returns
+ */
+function checkInputs(inputs) {
+    for (const key in inputs) {
+        if (Object.prototype.hasOwnProperty.call(inputs, key)) {
+            const value = inputs[key];
+            if (checkParameterIsNull(value)) {
+                continue;
+            }
+            if (!isJsonArrayString(value)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+exports.checkInputs = checkInputs;
+/**
+ * 查看字符是否可以转化为json array对象
+ * @param str
+ * @returns
+ */
+function isJsonArrayString(str) {
+    try {
+        const jsonArray = JSON.parse(str);
+        if (Array.isArray(jsonArray) && jsonArray.length > 0 && jsonArray) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    catch (e) {
+        return false;
+    }
+}
+exports.isJsonArrayString = isJsonArrayString;
+/**
+ * 判断字符串是否为空
+ * @param parameter
+ * @returns
+ */
+function checkParameterIsNull(parameter) {
+    return (parameter === undefined ||
+        parameter === null ||
+        parameter === '' ||
+        parameter.trim().length == 0);
+}
+exports.checkParameterIsNull = checkParameterIsNull;
+
+
+/***/ }),
 
 /***/ 351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
@@ -5407,341 +5743,6 @@ module.exports = parse;
 
 /***/ }),
 
-/***/ 954:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getInputs = void 0;
-const core = __importStar(__nccwpck_require__(186));
-function getInputs() {
-    return {
-        servers: core.getInput('servers', { required: false }),
-        mirrors: core.getInput('mirrors', { required: false }),
-        repositories: core.getInput('repositories', { required: false }),
-        pluginRepositories: core.getInput('plugin_repositories', { required: false })
-    };
-}
-exports.getInputs = getInputs;
-
-
-/***/ }),
-
-/***/ 399:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.run = void 0;
-const core = __importStar(__nccwpck_require__(186));
-const context = __importStar(__nccwpck_require__(954));
-const utils = __importStar(__nccwpck_require__(314));
-const settings = __importStar(__nccwpck_require__(505));
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        core.info('Generate settings.xml for Maven Builds');
-        const inputs = context.getInputs();
-        // 检查参数是否合法
-        if (!utils.checkInputs(inputs)) {
-            core.setFailed('parameter is not correct.');
-            return;
-        }
-        settings.generateSettingXml(inputs);
-    });
-}
-exports.run = run;
-run().catch(core.setFailed);
-
-
-/***/ }),
-
-/***/ 505:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.generateProfilesXml = exports.generateMirrorsXml = exports.generateServersXml = exports.generateSettingXml = exports.getTemplate = void 0;
-const fs = __importStar(__nccwpck_require__(147));
-const path = __importStar(__nccwpck_require__(17));
-const os = __importStar(__nccwpck_require__(37));
-const xmldom_1 = __nccwpck_require__(213);
-const xml_formatter_1 = __importDefault(__nccwpck_require__(886));
-const core = __importStar(__nccwpck_require__(186));
-const TEMPLATES_PATH = '../templates';
-function getTemplate(filePath, fileName) {
-    const templatePath = path.join(__dirname, filePath, fileName);
-    const template = fs.readFileSync(templatePath).toString();
-    return new xmldom_1.DOMParser().parseFromString(template, 'text/xml');
-}
-exports.getTemplate = getTemplate;
-function generateSettingXml(inputs) {
-    const settingsXml = getTemplate(TEMPLATES_PATH, 'settings.xml');
-    generateServersXml(settingsXml, inputs.servers);
-    generateMirrorsXml(settingsXml, inputs.mirrors);
-    generateProfilesXml(settingsXml, inputs.repositories, inputs.pluginRepositories);
-    const settingStr = new xmldom_1.XMLSerializer().serializeToString(settingsXml);
-    writeMavenSetting(getMavenSettingPath(), settingStr);
-}
-exports.generateSettingXml = generateSettingXml;
-function generateServersXml(settingsXml, servers) {
-    const serversXml = settingsXml.getElementsByTagName('servers')[0];
-    if (!servers) {
-        settingsXml.documentElement.removeChild(serversXml);
-        return;
-    }
-    JSON.parse(servers).forEach((server) => {
-        if (!server.id || !server.username || !server.password) {
-            throw new Error('servers must contain id, and username and password');
-        }
-        const serverXml = getTemplate(TEMPLATES_PATH, 'servers.xml');
-        serverXml.getElementsByTagName('id')[0].textContent = server.id;
-        serverXml.getElementsByTagName('username')[0].textContent =
-            server.username;
-        serverXml.getElementsByTagName('password')[0].textContent =
-            server.password;
-        serversXml.appendChild(serverXml);
-    });
-}
-exports.generateServersXml = generateServersXml;
-function generateMirrorsXml(settingsXml, mirrors) {
-    const mirrorsXml = settingsXml.getElementsByTagName('mirrors')[0];
-    if (!mirrors) {
-        settingsXml.documentElement.removeChild(mirrorsXml);
-        return;
-    }
-    JSON.parse(mirrors).forEach((mirror) => {
-        if (!mirror.id || !mirror.mirrorOf || !mirror.url) {
-            throw new Error('mirrors must contain id, and mirrorOf and url');
-        }
-        const mirrorXml = getTemplate(TEMPLATES_PATH, 'mirrors.xml');
-        mirrorXml.getElementsByTagName('id')[0].textContent = mirror.id;
-        mirrorXml.getElementsByTagName('mirrorOf')[0].textContent =
-            mirror.mirrorOf;
-        mirrorXml.getElementsByTagName('url')[0].textContent = mirror.url;
-        mirrorsXml.appendChild(mirrorXml);
-    });
-}
-exports.generateMirrorsXml = generateMirrorsXml;
-function generateProfilesXml(settingsXml, repositories, pluginRepositories) {
-    if (!repositories && !pluginRepositories) {
-        generateDefaultProfilesXml(settingsXml);
-        return;
-    }
-    const profilesXml = settingsXml.getElementsByTagName('profiles')[0];
-    generateDependencyOrPluginRepositoriesXml(profilesXml, repositories, 'repositories', 'repositories.xml');
-    generateDependencyOrPluginRepositoriesXml(profilesXml, pluginRepositories, 'pluginRepositories', 'plugin-repositories.xml');
-}
-exports.generateProfilesXml = generateProfilesXml;
-function generateDefaultProfilesXml(settingsXml) {
-    const profilesXml = settingsXml.getElementsByTagName('profiles')[0];
-    const dependencyRepositoriesXml = profilesXml.getElementsByTagName('repositories')[0];
-    const defaultRepositoriesXml = getTemplate(TEMPLATES_PATH, 'default-repositories.xml');
-    dependencyRepositoriesXml.appendChild(defaultRepositoriesXml);
-    const pluginRepositoriesXml = profilesXml.getElementsByTagName('pluginRepositories')[0];
-    const defaultPluginRepositoriesXml = getTemplate(TEMPLATES_PATH, 'default-plugin-repositories.xml');
-    pluginRepositoriesXml.appendChild(defaultPluginRepositoriesXml);
-}
-function generateDependencyOrPluginRepositoriesXml(profilesXml, dependencyOrPluginRepositories, tagName, templateName) {
-    const dependencyOrPluginRepositoriesXml = profilesXml.getElementsByTagName(tagName)[0];
-    if (!dependencyOrPluginRepositories) {
-        profilesXml.removeChild(dependencyOrPluginRepositoriesXml);
-        return;
-    }
-    JSON.parse(dependencyOrPluginRepositories).forEach((dependencyOrPluginRepository) => {
-        if (!dependencyOrPluginRepository.id ||
-            !dependencyOrPluginRepository.url) {
-            throw new Error(tagName + ' must contain id and url');
-        }
-        const dependencyOrPluginRepositoryXml = getTemplate(TEMPLATES_PATH, templateName);
-        dependencyOrPluginRepositoryXml.getElementsByTagName('id')[0].textContent = dependencyOrPluginRepository.id;
-        dependencyOrPluginRepositoryXml.getElementsByTagName('url')[0].textContent = dependencyOrPluginRepository.url;
-        const releasesXml = dependencyOrPluginRepositoryXml.getElementsByTagName('releases')[0];
-        if (dependencyOrPluginRepository.releases !== null &&
-            dependencyOrPluginRepository.releases !== undefined) {
-            const releases = dependencyOrPluginRepository.releases;
-            if (Object.prototype.hasOwnProperty.call(releases, 'enabled')) {
-                releasesXml.getElementsByTagName('enabled')[0].textContent =
-                    releases['enabled'];
-            }
-        }
-        else {
-            dependencyOrPluginRepositoryXml.documentElement.removeChild(releasesXml);
-        }
-        const snapshotsXml = dependencyOrPluginRepositoryXml.getElementsByTagName('snapshots')[0];
-        if (dependencyOrPluginRepository.snapshots !== null &&
-            dependencyOrPluginRepository.snapshots !== undefined) {
-            const snapshots = dependencyOrPluginRepository.snapshots;
-            snapshotsXml.getElementsByTagName('enabled')[0].textContent =
-                snapshots['enabled'];
-        }
-        else {
-            dependencyOrPluginRepositoryXml.documentElement.removeChild(snapshotsXml);
-        }
-        dependencyOrPluginRepositoriesXml.appendChild(dependencyOrPluginRepositoryXml);
-    });
-}
-function getMavenSettingPath() {
-    return path.join(os.homedir(), '.m2', 'settings.xml');
-}
-function writeMavenSetting(mavenSettingPath, mavenSettingContent) {
-    // 不存在.m2目录即创建
-    if (!fs.existsSync(path.dirname(mavenSettingPath))) {
-        core.info('Maven Setting Path does not exist.');
-        fs.mkdirSync(path.dirname(mavenSettingPath));
-    }
-    fs.writeFileSync(mavenSettingPath, (0, xml_formatter_1.default)(mavenSettingContent));
-}
-
-
-/***/ }),
-
-/***/ 314:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkParameterIsNull = exports.isJsonArrayString = exports.checkInputs = void 0;
-/**
- * 检查每个inputs 属性value是否合法
- * @param inputs
- * @returns
- */
-function checkInputs(inputs) {
-    for (const key in inputs) {
-        if (Object.prototype.hasOwnProperty.call(inputs, key)) {
-            const value = inputs[key];
-            if (checkParameterIsNull(value)) {
-                continue;
-            }
-            if (!isJsonArrayString(value)) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-exports.checkInputs = checkInputs;
-/**
- * 查看字符是否可以转化为json array对象
- * @param str
- * @returns
- */
-function isJsonArrayString(str) {
-    try {
-        const jsonArray = JSON.parse(str);
-        if (Array.isArray(jsonArray) && jsonArray.length > 0 && jsonArray) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    catch (e) {
-        return false;
-    }
-}
-exports.isJsonArrayString = isJsonArrayString;
-/**
- * 判断字符串是否为空
- * @param parameter
- * @returns
- */
-function checkParameterIsNull(parameter) {
-    return (parameter === undefined ||
-        parameter === null ||
-        parameter === '' ||
-        parameter.trim().length == 0);
-}
-exports.checkParameterIsNull = checkParameterIsNull;
-
-
-/***/ }),
-
 /***/ 491:
 /***/ ((module) => {
 
@@ -5864,8 +5865,9 @@ module.exports = require("util");
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(399);
+/******/ 	var __webpack_exports__ = __nccwpck_require__(109);
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()
 ;
+//# sourceMappingURL=index.js.map

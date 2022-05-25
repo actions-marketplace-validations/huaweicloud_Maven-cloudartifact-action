@@ -4,10 +4,8 @@ import * as os from 'os';
 import {DOMParser, XMLSerializer} from '@xmldom/xmldom';
 import formatter from 'xml-formatter';
 import * as core from '@actions/core';
-
 import * as context from './context';
 
-const TEMPLATES_PATH = '../templates';
 
 export function getTemplate(filePath: string, fileName: string) {
   const templatePath = path.join(__dirname, filePath, fileName);
@@ -16,7 +14,7 @@ export function getTemplate(filePath: string, fileName: string) {
 }
 
 export function generateSettingXml(inputs: context.Inputs) {
-  const settingsXml = getTemplate(TEMPLATES_PATH, 'settings.xml');
+  const settingsXml = getTemplate(context.TEMPLATES_PATH, 'settings.xml');
 
   generateServersXml(settingsXml, inputs.servers);
 
@@ -48,7 +46,7 @@ export function generateServersXml(settingsXml: Document, servers: string) {
       if (!server.id || !server.username || !server.password) {
         throw new Error('servers must contain id, and username and password');
       }
-      const serverXml = getTemplate(TEMPLATES_PATH, 'servers.xml');
+      const serverXml = getTemplate(context.TEMPLATES_PATH, 'servers.xml');
       serverXml.getElementsByTagName('id')[0].textContent = server.id;
       serverXml.getElementsByTagName('username')[0].textContent =
         server.username;
@@ -75,7 +73,7 @@ export function generateMirrorsXml(settingsXml: Document, mirrors: string) {
       if (!mirror.id || !mirror.mirrorOf || !mirror.url) {
         throw new Error('mirrors must contain id, and mirrorOf and url');
       }
-      const mirrorXml = getTemplate(TEMPLATES_PATH, 'mirrors.xml');
+      const mirrorXml = getTemplate(context.TEMPLATES_PATH, 'mirrors.xml');
       mirrorXml.getElementsByTagName('id')[0].textContent = mirror.id;
       mirrorXml.getElementsByTagName('mirrorOf')[0].textContent =
         mirror.mirrorOf;
@@ -117,7 +115,7 @@ function generateDefaultProfilesXml(settingsXml: Document) {
   const dependencyRepositoriesXml =
     profilesXml.getElementsByTagName('repositories')[0];
   const defaultRepositoriesXml = getTemplate(
-    TEMPLATES_PATH,
+    context.TEMPLATES_PATH,
     'default-repositories.xml'
   );
   dependencyRepositoriesXml.appendChild(defaultRepositoriesXml);
@@ -125,7 +123,7 @@ function generateDefaultProfilesXml(settingsXml: Document) {
   const pluginRepositoriesXml =
     profilesXml.getElementsByTagName('pluginRepositories')[0];
   const defaultPluginRepositoriesXml = getTemplate(
-    TEMPLATES_PATH,
+    context.TEMPLATES_PATH,
     'default-plugin-repositories.xml'
   );
   pluginRepositoriesXml.appendChild(defaultPluginRepositoriesXml);
@@ -158,7 +156,7 @@ function generateDependencyOrPluginRepositoriesXml(
         throw new Error(tagName + ' must contain id and url');
       }
       const dependencyOrPluginRepositoryXml = getTemplate(
-        TEMPLATES_PATH,
+        context.TEMPLATES_PATH,
         templateName
       );
       dependencyOrPluginRepositoryXml.getElementsByTagName(

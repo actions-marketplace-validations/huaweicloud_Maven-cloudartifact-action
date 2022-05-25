@@ -15,3 +15,6 @@ export function getInputs(): Inputs {
     pluginRepositories: core.getInput('plugin_repositories', {required: false})
   };
 }
+
+export const TEMPLATES_PATH = '../templates';
+
