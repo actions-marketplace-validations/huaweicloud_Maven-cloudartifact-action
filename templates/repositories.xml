@@ -1,0 +1,10 @@
+<repository>
+    <id></id>
+    <url></url>
+    <releases>
+        <enabled></enabled>
+    </releases>
+    <snapshots>
+        <enabled></enabled>
+    </snapshots>
+</repository>
