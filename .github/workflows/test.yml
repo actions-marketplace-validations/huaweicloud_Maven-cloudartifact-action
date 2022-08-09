@@ -9,7 +9,7 @@ jobs:
       - uses: ./
         with:
           servers: '[{ "id": "release_xxx_1_0", "username": "${{ secrets.MAVEN_USERNAME }}", "password": "${{ secrets.MAVEN_PASSWORD }}" },{ "id": "snapshot_xxx_2_0", "username": "${{ secrets.MAVEN_USERNAME }}", "password": "${{ secrets.MAVEN_PASSWORD }}" }]'
-          mirrors: '[{ "id": "z_mirrors", "mirrorOf": "*,!release_xxx_1_0,!snapshot_xxx_2_0", "url": "https://repo.huaweicloud.com/repository/maven/" }]'
+          mirrors: '[{ "id": "z_mirrors", "mirrorOf": "*,!release_xxx_1_0,!snapshot_xxx_2_0", "url": "https://<mirror url>" }]'
       - run: |
           cd '项目目录'
           mvn deploy -Dmaven.test.skip=true -U -e -X -B 

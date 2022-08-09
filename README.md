@@ -400,3 +400,7 @@ settings.xml输出结果
     </activeProfiles>
 </settings>
 ```
+## 公网域名说明
+```
+Maven官方中心仓：'https://repo1.maven.org/maven2'
+```

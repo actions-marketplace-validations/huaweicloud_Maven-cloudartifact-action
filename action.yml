@@ -1,6 +1,6 @@
 # action.yml
-name: 'HuaweiCloud Maven CloudArtifact'
-description: 'Action for deploying/downloading maven packages to HuaweiCloud Maven CloudArtifact'
+name: 'Huawei Cloud Maven CloudArtifact'
+description: 'Action for deploying/downloading maven packages to Huawei Cloud Maven CloudArtifact'
 inputs:
   servers:
     description: 'json array of servers to add to settings.xml, eg: [{"id": "serverId", "username": "username", "password": "password"}]'
