@@ -31,11 +31,11 @@ describe('generate setting xml', () => {
       inputs: {
         servers: '',
         mirrors:
-          '[{ "id": "z_mirrors", "mirrorOf": "*,!release_1_0,!snapshot_2_0", "url": "https://repo.huaweicloud.com/repository/maven/" }]',
+          '[{ "id": "z_mirrors", "mirrorOf": "*,!release_1_0,!snapshot_2_0", "url": "https://mirror_url" }]',
         repositories: '',
         pluginRepositories: ''
       },
-      result: 'https://repo.huaweicloud.com/repository/maven/'
+      result: 'https://mirror_url'
     },
     {
       description: '传入repositories',
@@ -43,11 +43,11 @@ describe('generate setting xml', () => {
         servers: '',
         mirrors: '',
         repositories:
-          '[{"id": "release_xxxx_1_0", "url": "https://devrepo.devcloud.cn-north-4.huaweicloud.com/07/nexus/content/repositories/xxxxx_1_0/", "releases": {"enabled": true}, "snapshots": {"enabled": false}},{"id": "snapshot_xxxxx_2_0", "url": "https://devrepo.devcloud.cn-north-4.huaweicloud.com/07/nexus/content/repositories/xxxxx_2_0/", "releases": {"enabled": false}, "snapshots": {"enabled": true}}]',
+          '[{"id": "release_xxxx_1_0", "url": "https://release_private_repo_url", "releases": {"enabled": true}, "snapshots": {"enabled": false}},{"id": "snapshot_xxxxx_2_0", "url": "https://snapshot_private_repo_url", "releases": {"enabled": false}, "snapshots": {"enabled": true}}]',
         pluginRepositories: ''
       },
       result:
-        'https://devrepo.devcloud.cn-north-4.huaweicloud.com/07/nexus/content/repositories/xxxxx_1_0/'
+        'https://release_private_repo_url'
     },
     {
       description: '传入pluginRepositories',
@@ -56,10 +56,10 @@ describe('generate setting xml', () => {
         mirrors: '',
         repositories: '',
         pluginRepositories:
-          '[{"id": "release_xxxx_1_0", "url": "https://devrepo.devcloud.cn-north-4.huaweicloud.com/07/nexus/content/repositories/xxxxx_1_0/", "releases": {"enabled": true}, "snapshots": {"enabled": false}},{"id": "snapshot_xxxxx_2_0", "url": "https://devrepo.devcloud.cn-north-4.huaweicloud.com/07/nexus/content/repositories/xxxxx_2_0/", "releases": {"enabled": false}, "snapshots": {"enabled": true}}]'
+          '[{"id": "release_xxxx_1_0", "url": "https://release_private_repo_url", "releases": {"enabled": true}, "snapshots": {"enabled": false}},{"id": "snapshot_xxxxx_2_0", "url": "https://snapshot_private_repo_url", "releases": {"enabled": false}, "snapshots": {"enabled": true}}]'
       },
       result:
-        'https://devrepo.devcloud.cn-north-4.huaweicloud.com/07/nexus/content/repositories/xxxxx_1_0/'
+        'https://release_private_repo_url'
     }
   ];
   testCase.forEach(item => {
