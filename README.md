@@ -14,7 +14,7 @@ Maven CloudArtifact Action会创建settings.xml文件(~/.m2/settings.xml),支持
 json array of servers to add to settings.xml.  
 ```yml
 steps:
-- uses: huaweicloud/Maven-cloudartifact-action@v1.0.0
+- uses: huaweicloud/Maven-cloudartifact-action@v1.1.0
   with:
     servers: '[{"id": "serverId", "username": "${{ secrets.MAVEN_USERNAME }}", "password": "${{ secrets.MAVEN_PASSWORD }}"}]'
 ```
@@ -24,7 +24,7 @@ Reference: [Maven Settings > Servers](http://maven.apache.org/settings.html#serv
 json array of mirrors to add to settings.xml.  
 ```yml
 steps:
-- uses: huaweicloud/Maven-cloudartifact-action@v1.0.0
+- uses: huaweicloud/Maven-cloudartifact-action@v1.1.0
   with:
      mirrors: '[{"id": "mirrorId", "mirrorOf": "mirrorOf", "url": "mirrorUrl"}]'
 ```
@@ -33,7 +33,7 @@ Reference: [Maven Settings > Mirrors](http://maven.apache.org/settings.html#mirr
 json array of repositories to add to settings.xml.  
 ```yml
 steps:
-- uses: huaweicloud/Maven-cloudartifact-action@v1.0.0
+- uses: huaweicloud/Maven-cloudartifact-action@v1.1.0
   with:
     repositories: '[{ "id": "some-repository", "url": "http://some.repository.url", "releases": { "enabled": "true" }, "snapshots": { "enabled": "false" } }]'
 ```
@@ -60,7 +60,7 @@ Reference: [Maven Settings > Repositories](http://maven.apache.org/settings.html
 json array of pluginRepositories to add to settings.xml.  
 ```yml
 steps:
-- uses: huaweicloud/Maven-cloudartifact-action@v1.0.0
+- uses: huaweicloud/Maven-cloudartifact-action@v1.1.0
   with:
     plugin_repositories: '[{ "id": "some-plugin-repository", "url": "http://some.plugin.repository.url", "releases": { "enabled": "true" }, "snapshots": { "enabled": "false" }}]'
 ```
@@ -87,7 +87,7 @@ Reference: [Maven Settings > Plugin Repositories](http://maven.apache.org/settin
 ### 1.默认不传参数样例
 ```yml
 steps:
-- uses: huaweicloud/Maven-cloudartifact-action@v1.0.0
+- uses: huaweicloud/Maven-cloudartifact-action@v1.1.0
 ```
 settings.xml输出结果
 ```xml
@@ -158,7 +158,7 @@ settings.xml输出结果
 ### 2.上传私有依赖库组件到Maven私有依赖库样例
 ```yml
 steps:
-- uses: huaweicloud/Maven-cloudartifact-action@v1.0.0
+- uses: huaweicloud/Maven-cloudartifact-action@v1.1.0
   with:
           servers: '[{ "id": "release_xxxxx_1_0", "username": "${{ secrets.MAVEN_USERNAME }}", "password": "${{ secrets.MAVEN_PASSWORD }}" },{ "id": "snapshot_xxxxx_2_0", "username": "${{ secrets.MAVEN_USERNAME }}", "password": "${{ secrets.MAVEN_PASSWORD }}" }]'
 ```
@@ -261,7 +261,7 @@ release私仓: https://devrepo.devcloud.cn-north-4.huaweicloud.com/07/nexus/cont
 snapshot私仓:https://devrepo.devcloud.cn-north-4.huaweicloud.com/07/nexus/content/repositories/xxxxx_2_0/  
 ```yml
 steps:
-- uses: huaweicloud/Maven-cloudartifact-action@v1.0.0
+- uses: huaweicloud/Maven-cloudartifact-action@v1.1.0
   with:
     with:  
         servers: '[{ "id": "release_xxxx_1_0", "username": "${{ secrets.MAVEN_USERNAME }}", "password": "${{ secrets.MAVEN_PASSWORD }}" },{ "id": "snapshot_xxxx_2_0", "username": "${{ secrets.MAVEN_USERNAME }}", "password": "${{ secrets.MAVEN_PASSWORD }}" }]'
@@ -400,3 +400,5 @@ settings.xml输出结果
     </activeProfiles>
 </settings>
 ```
+## Action中使用公网地址说明
+1.[Maven官方中心仓](https://repo1.maven.org/maven2)
